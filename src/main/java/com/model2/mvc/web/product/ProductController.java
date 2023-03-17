@@ -1,7 +1,10 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -21,7 +25,10 @@ import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
 
 
-
+//@MultipartConfig(
+//		fileSizeThreshold = 1024*1024,
+//		maxFileSize =1024*1024*50,
+//		maxRequestSize = 1024*1024*50*5)
 
 //==> 상품관리 Controller
 @Controller
@@ -58,19 +65,41 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "addProduct", method = RequestMethod.POST)
-	public String addProduct( @ModelAttribute("product") Product product ) throws Exception {
+	public String addProduct(@ModelAttribute("product") Product product)
+			throws Exception { //, @RequestParam("file") MultipartFile file
+		System.out.println("ProductController.java에 fileUpload메소드 실행됨");
+//
+//		String savedFileName = ""; // 빈 파일명 설정하고
+//
+//		String uploadPath = "C:\\workspace\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
+////		실제 파일 업로드 경로 db에는 파일명만 올라간다
+//		String originalFileName = file.getOriginalFilename();
+////		form에서 실제 파일명 가져오기
+//		UUID uuid = UUID.randomUUID();
+////		자바 aPI에서 유니크 아이디 생성하는 메소드 사용 해서  uuid 생성
+//		savedFileName = uuid.toString() + "_" + originalFileName;
+////		실제 올라간 파일명 보존하기 위해서 uuid+오리지날 아이디를 _로 구분해서 저장 파일명 생성
+//// 		4. 파일 생성
+//		File file1 = new File(uploadPath + savedFileName);
+////		File 타입의 file1 = 경로+uuid_오리지날아이디로 생성
+//// 		5. 서버로 전송
+//		file.transferTo(file1);
+//// 		파일로 경로+파일명으로 전송한다
+//
+//// 		model로 저장
+//		product.setFileName(savedFileName);
+////		db에는 파일명만 올라간다 
 
-		System.out.println("ProductController.java /addProduct POST");
-		//Business Logic
+//		Business Logic
 		productService.addProduct(product);
-		
+
 		return "forward:/product/getProduct.jsp";
 	}
 	
 //	@RequestMapping("/getProduct.do")
 	@RequestMapping(value = "getProduct", method = RequestMethod.GET)
 	public String getProduct( @RequestParam("prodNo") int prodNo, 
-								@RequestParam("menu") String menu,
+								@RequestParam("menu") String menu ,
 								Model model ) throws Exception {
 		
 		System.out.println("ProductController.java /getProduct GET");
@@ -106,13 +135,33 @@ public class ProductController {
 //	@RequestMapping("/updateProduct.do")
 	@RequestMapping(value = "updateProduct", method = RequestMethod.POST)
 	public String updateProduct( @ModelAttribute("product") Product product ,
-								 @RequestParam("menu") String menu,
-									Model model , HttpSession session) throws Exception{
+								 @RequestParam("menu" ) String menu ,
+								 Model model , HttpSession session) throws Exception{
+		//@RequestParam("file") MultipartFile file,
 
 		System.out.println("ProductController.java /updateProduct POST");
+//		String savedFileName = ""; //빈 파일명 설정하고
+//		
+//		String uploadPath = "C:\\workspace\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
+//		//실제 파일 업로드 경로 db에는 파일명만 올라간다
+//		String originalFileName = file.getOriginalFilename();
+//		//form에서 실제 파일명 가져오기
+//		UUID uuid = UUID.randomUUID();
+//		//자바 aPI에서 유니크 아이디 생성하는 메소드 사용 해서  uuid 생성
+//	     savedFileName = uuid.toString() + "_" + originalFileName;
+//	     //실제 올라간 파일명 보존하기 위해서 uuid+오리지날 아이디를 _로 구분해서 저장 파일명 생성
+//	     // 4. 파일 생성
+//	     File file1 = new File(uploadPath + savedFileName);
+//	     //File 타입의 file1 = 경로+uuid_오리지날아이디로 생성
+//	     // 5. 서버로 전송
+//	     file.transferTo(file1);
+//	     // 파일로 경로+파일명으로 전송한다
+//	     
+//	     // model로 저장
+//	     product.setFileName(savedFileName);
 		//Business Logic
 		productService.updateProduct(product);
-		System.out.println("ProductController.java /updateProduct.do 실행됨실행됨 제발 실행됨");
+		System.out.println("ProductController.java /updateProduct.do 실행됨");
 		System.out.println("menu "+menu);
 		
 //		model.addAttribute("menu", menu);

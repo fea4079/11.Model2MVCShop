@@ -4,140 +4,65 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html>
+
+<html lang="ko">
 
 <head>
 <meta charset="EUC-KR">
-<title>상품 검색</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/css/animate.min.css" rel="stylesheet">
+   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   
+   
+   <!-- jQuery UI toolTip 사용 CSS-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- jQuery UI toolTip 사용 JS-->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+	<style>
+	  body {
+            padding-top : 50px;
+        }
+    </style>
 
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-//검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용
 	function fncGetProductList(currentPage, menu){
-		/* document.getElementById("currentPage").value = currentPage; */
 		$("#currentPage").val(currentPage);
-	/* 	alert(currentPage);  */
-		/* document.getElementById("menu").value = menu; */
 		$("#menu").val(menu);
-	/* 	 alert(menu); */ 
-		/* $("#prodNo").val(); */
-		/* document.detailForm.submit(); */
 		$("form").attr("method", "POST").attr("action", "/product/listProduct").submit();
 	}	
 	
 	$(function() {
 		var menu = $("#menu").val(); 
-		/* alert("listProduct.jsp menu= "+menu); */
-		/* var prodNo = $("prodNo").val(); */
-		/* var prodNo =$("#prodNo").val(); */
+		var prodNo = $("#prodNo").val();
+		/* alert(prodNo) */
+	
 		var currentPage = $("#currentPage").val();
-		/* alert("listProduct.jsp prodNo= "+prodNo); */
-		//오토컴플릿 구현중
-		 /* var availableTags = [
-		      "ActionScript",
-		      "AppleScript",
-		      "Asp",
-		      "BASIC",
-		      "C",
-		      "C++",
-		      "Clojure",
-		      "COBOL",
-		      "ColdFusion",
-		      "Erlang",
-		      "Fortran",
-		      "Groovy",
-		      "Haskell",
-		      "Java",
-		      "JavaScript",
-		      "Lisp",
-		      "Perl",
-		      "PHP",
-		      "Python",
-		      "Ruby",
-		      "Scala",
-		      "Scheme"
-		    ]; */
-		
-		/*$(".input[name=searchKeyword]").autocomplete({
-			source : availableTags
-			select : function(event, ui) { //item 선택시 이벤트
-				console.log(ui, item);
-			},
-			focus : function(event,ui) { //포커스시 이벤트
-				return false;
-			}
-			minLength : 1, //최소 글자수
-			autoFocus : true,  // 메뉴가 표시될때 첫번째 항목에 포커스
-			classes : { //위젯 요소에 추가할 클래스
-				'ui-autocomplete' : 'highlight'
-			},
-			delay : 500, //오토컴플릿 이벤트 발생까지 지연시간 ms
-			disable : false, //true시 자동완성기능 꺼짐
-			position : {my : 'right top', at : 'right bottom'}, // 제안 메뉴의 위치 식별
-			close : function(event) { // 자동완성 창 닫아질때의 이벤트
-				consol.log(event)
-			}
-		});  */
-		
-		$( ".ct_btn01:contains('검색')" ).on("click", function() {
-			/* alert(  $( "td.ct_btn01:contains('검색')" ).html() ); */
-			/* var searchK= $("input[name=searchKeyword]").val();*/
-			/*alert(searchK);*/
-			/* $( "input[name=searchKeyword]" ).autocomplete({
-			      source: availableTags
-			    });  */
+			
+		$( ".btn.btn-default:contains('검색')" ).on("click", function() {
 			fncGetProductList(currentPage,menu);
 		})
 								
-		$( ".ct_list_pop td:nth-child(3)").on("click", function() {
-			var prodNo = $(this).children($("#prodNo")).val();
-			//var prodNo = $(this).text().trim();
+		$( "td:nth-child(2)").on("click", function() {
+			/* var prodNo = $(this).children('#prodNo').val();
+			alert("prodNo= "+prodNo) */
+			/* alert("prodNo="+$(this).text().trim(); */
 			
-			//alert("menu= "+menu);
-			
-			if(menu=="search"){
-				$.ajax( 
-						{
-							url : "/product/json/getProduct/"+prodNo ,
-							method : "GET" ,
-							dataType : "json" ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							success : function(JSONData , status) {
-	
-								//Debug...
-								//alert(status);
-								//Debug...
-								//alert("JSONData : \n"+JSONData);
-								
-								var displayValue = "<h3>"
-															+"제품번호 : "+JSONData.prodNo+"<br/>"
-															+"이    름 : "+JSONData.prodName+"<br/>"
-															+"상세정보 : "+JSONData.prodDetail+"<br/>"
-															+"가    격 : "+JSONData.price+"<br/>"
-															+"제조일자 : "+JSONData.manuDate+"<br/>"
-															+"파 일 명 : "+JSONData.fileName+"<br/>"
-															+"</h3>";
-								//Debug...									
-								//alert(displayValue);
-								$("h3").remove();
-								$( "#"+prodNo+"" ).html(displayValue);
-							}
-					}); 
-				}else if(menu=="manage"){
-				
-				 self.location = "/product/getProduct?prodNo="+$(this).children($("#prodNo")).val()+"&menu="+menu;
-				}
+			  self.location = "/product/getProduct?prodNo="+$(this).children($("#prodNo")).val()+"&menu="+menu;  
+			/* self.location = "/product/getProduct?prodNo="+$("#prodNo").val()+"&menu="+menu; */
+			 /*  self.location = "/product/getProduct?prodNo="+$(this).children($("input[name=prodNo]")).val()+"&menu="+menu;  */
 			
 		});
 		
@@ -147,9 +72,7 @@
 		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
 		 
 		 $( "td" ).on( "mouseover", function() {
-			   $( this ).css( "color", "#FF8000" ); 
-			 /*  $( this ).css( "color", "#2E2E2E" ); */
-			  
+			   $( this ).css( "color", "#FF8000" ); 			  
 			});
 		 $('td').on("mouseout", function(){
 		      $(this).css("color","#505050");
@@ -158,83 +81,109 @@
 
 </script>
 </head>
+	<jsp:include page="/layout/toolbar.jsp" />
 
-<body bgcolor="#ffffff" text="#000000">
-<%-- <c:set var = "pageType" value="product" scope="request"/> --%>
-<%-- <c:set var="pageType" value="product" scope="request"/>
-<c:set var="menu" value="${param.menu}" scope="request"/>
-<c:set var="prodNo" value="${product.prodNo}" scope="request"/> --%>
-
-<div style="width:98%; margin-left:10px;">
+<div class="container">
 
 <form name="detailForm">
 
-<%-- <form name="detailForm" action="/listProduct.do?menu=${menu}" method="post"> --%>
-<%-- <form name="detailForm" action="/product/listProduct?menu=${menu}" method="post"> --%>
+	<div class="page-header text-info">
+		<c:choose>
+			<c:when test="${param.menu eq 'manage' }"> 
+			<h3>상품관리</h3>
+			</c:when>
+			<c:when test="${param.menu eq 'search' }">
+			<h3>상품검색</h3>
+			</c:when>
+		</c:choose>
+	</div>
 
-<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
-	<tr>
-		<td width="15" height="37">
-			<img src="/images/ct_ttl_img01.gif" width="15" height="37">
-		</td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="93%" class="ct_ttl01">
-				<c:choose>
-			 		<c:when test="${param.menu eq 'manage' }"> 
-			 			상품 관리 
-					</c:when>
-					<c:when test="${param.menu eq 'search' }"> 
-						상품 목록조회 
-					</c:when>
-				</c:choose>
-			
-				</tr>
-			</table>
-		</td>
-		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif" width="12" height="37">
-		</td>
-	</tr>
-</table>
+	<div class="row">
+	    
+		    <div class="col-md-6 text-left">
+		    	<p class="text-primary">
+		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+		    	</p>
+		    </div>
+		    
+		    <div class="col-md-6 text-right">
+			    <form class="form-inline" name="detailForm">
+			    
+				  <div class="form-group">
+				    <select class="form-control" name="searchCondition" >
+						<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""}>상품번호</option>
+						<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""}>상품명</option>
+						<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>가격</option>
+					</select>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label class="sr-only" for="searchKeyword">검색어</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				  </div>
+				  
+				  <button type="button" class="btn btn-default">검색</button>
+				  
+				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+				  <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}"/>
+				  
+				</form>
+	    	</div>
+	    	
+		</div>
+		
+		 
+	<table class="table table-hover table-striped" >
+      
+        <thead>
+          <tr>
+            <th align="center">No</th>
+            <th align="left" >상품명</th>
+            <th align="left">상세정보</th>
+            <th align="left">상품가격</th>
+            <th align="left">현재상태</th>
+          </tr>
+        </thead>
+       
+		<tbody>
+		
+		  <c:set var="i" value="0" />
+		  <c:forEach var="product" items="${list}">
+			<c:set var="i" value="${ i+1 }" />
+			<tr>
+			  <td align="center">${ i }</td>
+			  <td align="left"  title="클릭하세요">${product.prodName}
+			  	<input type="hidden" id="prodNo" name="prodNo" value="${product.prodNo}"/>
+			  	<input type="hidden" id="menu" name="menu" value="${param.menu}"/>
+			  	</td>
+			 	
+			  <td align="left">${product.prodDetail}</td>
+			  <td align="left">${product.price}</td>
+			  <td align="left">${product.proTranCode}</td>
+			  <td align="left">
+			  	<i class="glyphicon glyphicon-ok" id= "${product.prodNo}"></i>
+			  	
+			  </td>
+			</tr>
+          </c:forEach>
+        
+        </tbody>
+      
+      </table>
+    </div>
+</form>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-	<tr>
-		<td align="right">
-			<select name="searchCondition" class="ct_input_g" style="width:80px">
-								
-				<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""}>상품번호</option>
-				<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""}>상품명</option>
-				<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>가격</option>
-			</select>
-			<div class="ui-widget">
-			<input 	type="text" name="searchKeyword" 
-							value="${! empty search.searchKeyword ? search.searchKeyword : ""}" 
-							class="ct_input_g"	autocomplete="on" style="width:200px; height:20px " >
-			</div>
-		</td>
-	
-		<td align="right" width="70">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23">
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<%-- <a href="javascript:fncGetProductList('${resultPage.currentPage}','${param.menu}');">검색</a> --%>
-						검색
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23">
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+		<jsp:include page="../common/pageNavigator1.jsp"/>
+<% System.out.println("listProduct.jsp 555555555555555555555555555555"); %>
+</body>
+</html>
+
+
+
+
+<%--  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td colspan="11" >
 		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage} 페이지</td>
@@ -251,8 +200,8 @@
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">등록일</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">현재상태</td>
-		<td class="ct_line02"></td>
+		<!-- <td class="ct_list_b" width="150">현재상태</td>
+		<td class="ct_line02"></td> -->
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -269,22 +218,13 @@
 			 	<input type="hidden" id="menu" name="menu" value="${param.menu}"/>
 				<c:choose>
 			 		<c:when test="${param.menu eq 'manage' }"> 
-						<%-- <a href="/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a> --%>
-			 			
-			 			<%-- <a href="/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a> --%> 
-			 			 ${product.prodName} 
+						 ${product.prodName} 
 					</c:when>
 					<c:when test="${param.menu eq 'search' }"> 
-						 <%-- <a href="/getProduct.do?menu=${param.menu}">${product.prodName}</a>  --%>
-						<%-- <a href="/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}"> --%>
-				<%-- 		<input type="hidden" id="prodNo" name="prodNo" value="${product.prodNo}"/>
-			 			<input type="hidden" id="menu" name="menu" value="${param.menu}"/> --%>
-						${product.prodName}<!-- </a> -->
+						 ${product.prodName}
 					</c:when>
 				</c:choose>
 				
-			<%-- <td align="left"><a href="/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a></td> --%>
-			<%-- <td align="left"><a href="/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a></td> --%>
 			<td></td>
 			<td align="left">${product.price}</td>
 			<td></td>
@@ -292,7 +232,6 @@
 			</td>		
 		</tr>
 		<tr>
-		<!-- <td colspan="11" bgcolor="D6D7D6" height="1"></td> -->
 		<td id="${product.prodNo}" colspan="11" bgcolor="D6D7D6" height="1"></td>
 		</tr>
 	</c:forEach>
@@ -303,54 +242,9 @@
 		<td align="center">
 			<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}"/>
 			
-			
-			<%-- <input type="hidden" id="prodNo" name="prodNo" value="${product.prodNo}"/> --%>
-			<%-- <% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
-					◀ 이전
-			<% }else{ %>
-					<a href="javascript:fncGetProductList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
-			<% } %>
-
-			<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
-					<a href="javascript:fncGetProductList('<%=i %>','${param.menu}');"><%=i %></a>
-			<% 	}  %>
-			
-			<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
-					<a href="javascript:fncGetProductList('<%=i %>');"><%=i %></a>
-			<% 	}  %>
-	
-			<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
-					이후 ▶
-			<% }else{ %>
-					<a href="javascript:fncGetProductList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
-			<% } %>  --%>
-		 
 		
-		<%--  <%
-			for(int i=1;i<=totalPage;i++){
-		%>
-					
-			<%if (menu.equals("manage")) {%>
-			<a href="/listProduct.do?page=<%=i%>&menu=<%=menu%>"><%=i %></a>
-			<% }%>
-		<%
-			}
-		%> --%>
-		
-			
-			<%-- <c:set var = "product" value="product" scope="request"/> --%>
-			<%-- <c:set var = "search" value="search" scope="request"/>
-			<c:set var = "menu" value="menu" scope="request"/> --%>
-			
-			
-			<%-- <jsp:include page="../common/pageNavigator1.jsp"/> --%>
 			<jsp:include page="../common/pageNavigator1.jsp"/>
     	</td>
 	</tr>
-</table>
+</table>  --%>
 <!--  페이지 Navigator 끝 -->
-</form>
-</div>
-<% System.out.println("listProduct.jsp 555555555555555555555555555555"); %>
-</body>
-</html>

@@ -51,6 +51,13 @@
 		    <load-on-startup>1</load-on-startup>
   </servlet>
   
+  <!-- <multipart-config>
+  		<location>C:\workspace\11.Model2MVCShop\src\main\webapp\images\uploadFiles</location>
+        <max-file-size>20971520</max-file-size>   1mb*20
+        <max-request-size>41943040</max-request-size>  40mb
+        <file-size-threshold>20971520</file-size-threshold> 20MB
+    </multipart-config> --> 
+  
 	<!-- 	URI : / 형식  Servlet Mapping -->
 	<servlet-mapping>
 	  <servlet-name>action</servlet-name>

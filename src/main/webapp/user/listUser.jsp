@@ -65,6 +65,7 @@
 		
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "td:nth-child(2)" ).on("click" , function() {
+				/* alert($(this).text().trim()) */
 				 self.location ="/user/getUser?userId="+$(this).text().trim();
 			});
 						

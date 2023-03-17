@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
-<%@ page pageEncoding="EUC-KR"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- <%@ page import="com.model2.mvc.service.domain.*" %> --%>
 
@@ -8,17 +7,15 @@
     System.out.println("updateProdecut.jsp product= "+product);
     String menu = request.getParameter("menu");
 %> --%>
-<!DOCTYPE html>
 
 <html>
 <head>
-<meta charset="EUC-KR">
 <title>상품정보수정</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript">
+<script type="text/javascript">
+
 
 function fncUpdateProduct() {
 
@@ -32,35 +29,22 @@ function fncUpdateProduct() {
 		return;
 	} */
 /* 	document.getElementById("menu").value = menu;  */
-	 /* document.detailForm.action='/product/updateProduct'; */
-	 $("form").attr("method","POST").attr("action","/product/updateProduct").submit();
-}	 
-	$(function() {
-		$( ".ct_btn01:contains('수정')" ).on("click", function(){
-			fncUpdateProduct();
-		})
-	})
-	/* function resetData() {
-	document.detailForm.reset();
-	} */
-	$(function() {
-		$(".ct_btn01:contains('취소')" ).on("click", function() {
-			history.go(-1);
-		})
-	})
-	
+	 document.detailForm.action='/product/updateProduct';
+	document.detailForm.submit();
 	 
+}
 
 
-
-
+function resetData() {
+	document.detailForm.reset();
+}
 
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 <%-- <c:set var="menu" value="${param.menu}" scope="request"/> --%>
-<form name="detailForm"  >
+<form name="detailForm"  method="post" >
 
 <input type="hidden" name="prodNo" value="${product.prodNo}">
 
@@ -139,10 +123,7 @@ function fncUpdateProduct() {
 		<td class="ct_write01">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td height="26">
-						<input 	type="text" name="fileName" value="${product.fileName}" class="ct_input_g" 
-										style="width:100px; height:19px" onChange="check_email(this.form);">
-					</td>
+					<td height="26">${product.fileName}</td>
 				</tr>
 			</table>
 		</td>
@@ -162,8 +143,7 @@ function fncUpdateProduct() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<!-- <a href="javascript:fncUpdateProduct();">수정</a> -->
-						수정
+						<a href="javascript:fncUpdateProduct();">수정</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -173,8 +153,7 @@ function fncUpdateProduct() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<!-- <a href="javascript:resetData();">취소</a> -->
-						취소
+						<a href="javascript:resetData();">취소</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
