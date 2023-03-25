@@ -42,11 +42,12 @@ body > div.container {
 <script type="text/javascript">
 	
 	$(function() {
-		/* var menu = $("#menu").val();
-		alert("menu="+menu) */
+		var menu = $("#menu").val();
+		alert("getProduct menu="+menu) 
 		
 		$("button:contains('확인')").on("click", function(){
-			self.location = "/product/listProduct?prodNo=${product.prodNo}&menu=${param.menu}";
+			self.location = "/product/listProduct?prodNo="+$(this).children($("#prodNo")).val()+"&menu="+menu;
+			/* self.location = "/product/listProduct?prodNo=${product.prodNo}&menu=${param.menu}"; */
 		})
 		
 		$("button:contains('추가등록')").on("click", function(){
@@ -91,6 +92,7 @@ body > div.container {
 	  		<div class="col-xs-4 col-md-2"><strong>상품이미지</strong></div>
 			<div class="col-xs-8 col-md-4">
 			<img src="/images/uploadFiles/${product.fileName}" />
+			<input type="hidden" name="fileName" />
 			</div>
 	</div>
 	
@@ -98,7 +100,9 @@ body > div.container {
 	<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			<button type="button" class="btn btn-primary">확인</button>
-				<input type="hidden" id="menu" name="menu" value="${param.menu}" />
+				<input type="hidden" id="prodNo" name="prodNo" value="${product.prodNo}"/>
+				<input type="hidden" id="menu" name="managa" value="${param.menu}" />
+								
 	  		</div>
 	</div>
 	

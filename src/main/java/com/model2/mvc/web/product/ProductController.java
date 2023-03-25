@@ -25,10 +25,10 @@ import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
 
 
-//@MultipartConfig(
-//		fileSizeThreshold = 1024*1024,
-//		maxFileSize =1024*1024*50,
-//		maxRequestSize = 1024*1024*50*5)
+@MultipartConfig(
+		fileSizeThreshold = 1024*1024,
+		maxFileSize =1024*1024*50,
+		maxRequestSize = 1024*1024*50*5)
 
 //==> 상품관리 Controller
 @Controller
@@ -65,30 +65,31 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "addProduct", method = RequestMethod.POST)
-	public String addProduct(@ModelAttribute("product") Product product)
-			throws Exception { //, @RequestParam("file") MultipartFile file
+	public String addProduct(@ModelAttribute("product") Product product,
+							@RequestParam("file") MultipartFile file)
+			throws Exception { //
 		System.out.println("ProductController.java에 fileUpload메소드 실행됨");
-//
-//		String savedFileName = ""; // 빈 파일명 설정하고
-//
-//		String uploadPath = "C:\\workspace\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
-////		실제 파일 업로드 경로 db에는 파일명만 올라간다
-//		String originalFileName = file.getOriginalFilename();
-////		form에서 실제 파일명 가져오기
-//		UUID uuid = UUID.randomUUID();
-////		자바 aPI에서 유니크 아이디 생성하는 메소드 사용 해서  uuid 생성
-//		savedFileName = uuid.toString() + "_" + originalFileName;
-////		실제 올라간 파일명 보존하기 위해서 uuid+오리지날 아이디를 _로 구분해서 저장 파일명 생성
-//// 		4. 파일 생성
-//		File file1 = new File(uploadPath + savedFileName);
-////		File 타입의 file1 = 경로+uuid_오리지날아이디로 생성
-//// 		5. 서버로 전송
-//		file.transferTo(file1);
-//// 		파일로 경로+파일명으로 전송한다
-//
-//// 		model로 저장
-//		product.setFileName(savedFileName);
-////		db에는 파일명만 올라간다 
+
+		String savedFileName = ""; // 빈 파일명 설정하고
+
+		String uploadPath = "C:\\workspace\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles\\";
+//		실제 파일 업로드 경로 db에는 파일명만 올라간다
+		String originalFileName = file.getOriginalFilename();
+//		form에서 실제 파일명 가져오기
+		UUID uuid = UUID.randomUUID();
+//		자바 aPI에서 유니크 아이디 생성하는 메소드 사용 해서  uuid 생성
+		savedFileName = uuid.toString() + "_" + originalFileName;
+//		실제 올라간 파일명 보존하기 위해서 uuid+오리지날 아이디를 _로 구분해서 저장 파일명 생성
+// 		4. 파일 생성
+		File file1 = new File(uploadPath + savedFileName);
+//		File 타입의 file1 = 경로+uuid_오리지날아이디로 생성
+// 		5. 서버로 전송
+		file.transferTo(file1);
+// 		파일로 경로+파일명으로 전송한다
+
+// 		model로 저장
+		product.setFileName(savedFileName);
+//		db에는 파일명만 올라간다 
 
 //		Business Logic
 		productService.addProduct(product);
@@ -117,6 +118,26 @@ public class ProductController {
 		}
 
 	}
+//	@RequestMapping(value = "getProduct", method = RequestMethod.POST)
+//	public String getProduct2( @RequestParam("prodNo") int prodNo, 
+//								@RequestParam("menu") String menu ,
+//								Model model ) throws Exception {
+//		
+//		System.out.println("ProductController.java /getProduct GET");
+//		//Business Logic
+//		Product product = productService.getProduct(prodNo);
+//		// Model 과 View 연결
+//		model.addAttribute("product", product);
+//		System.out.println("ProductController.java /getProduct.do  product "+product);
+//		//System.out.println("ProductController.java /getProduct.do  menu "+menu);
+//		
+//		if(menu.equals("manage")) {
+//			return "forward:/product/updateProductView.jsp";	
+//		}else {
+//			return "forward:/product/getProduct.jsp";
+//		}
+//
+//	}
 	
 //	@RequestMapping("/updateProductView.do")
 	@RequestMapping(value = "updateProduct", method = RequestMethod.GET)
@@ -135,35 +156,38 @@ public class ProductController {
 //	@RequestMapping("/updateProduct.do")
 	@RequestMapping(value = "updateProduct", method = RequestMethod.POST)
 	public String updateProduct( @ModelAttribute("product") Product product ,
-								 @RequestParam("menu" ) String menu ,
-								 Model model , HttpSession session) throws Exception{
-		//@RequestParam("file") MultipartFile file,
+								 @RequestParam("menu") String menu,
+								 @RequestParam("file") MultipartFile file,
+									Model model) throws Exception{
+		//@RequestParam("file") MultipartFile file,  , HttpSession session
 
 		System.out.println("ProductController.java /updateProduct POST");
-//		String savedFileName = ""; //빈 파일명 설정하고
-//		
-//		String uploadPath = "C:\\workspace\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
-//		//실제 파일 업로드 경로 db에는 파일명만 올라간다
-//		String originalFileName = file.getOriginalFilename();
-//		//form에서 실제 파일명 가져오기
-//		UUID uuid = UUID.randomUUID();
-//		//자바 aPI에서 유니크 아이디 생성하는 메소드 사용 해서  uuid 생성
-//	     savedFileName = uuid.toString() + "_" + originalFileName;
-//	     //실제 올라간 파일명 보존하기 위해서 uuid+오리지날 아이디를 _로 구분해서 저장 파일명 생성
-//	     // 4. 파일 생성
-//	     File file1 = new File(uploadPath + savedFileName);
-//	     //File 타입의 file1 = 경로+uuid_오리지날아이디로 생성
-//	     // 5. 서버로 전송
-//	     file.transferTo(file1);
-//	     // 파일로 경로+파일명으로 전송한다
-//	     
-//	     // model로 저장
-//	     product.setFileName(savedFileName);
+		String savedFileName = ""; //빈 파일명 설정하고
+		
+		String uploadPath = "C:\\workspace\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles\\";
+		//실제 파일 업로드 경로 db에는 파일명만 올라간다
+		String originalFileName = file.getOriginalFilename();
+		//form에서 실제 파일명 가져오기
+		UUID uuid = UUID.randomUUID();
+		//자바 aPI에서 유니크 아이디 생성하는 메소드 사용 해서  uuid 생성
+	     savedFileName = uuid.toString() + "_" + originalFileName;
+	     System.out.println("originalFileName= "+originalFileName);
+	     //실제 올라간 파일명 보존하기 위해서 uuid+오리지날 아이디를 _로 구분해서 저장 파일명 생성
+	     // 4. 파일 생성
+	     File file1 = new File(uploadPath + savedFileName);
+	     //File 타입의 file1 = 경로+uuid_오리지날아이디로 생성
+	     // 5. 서버로 전송
+	     file.transferTo(file1);
+	     // 파일로 경로+파일명으로 전송한다
+	     
+	     // model로 저장
+	     product.setFileName(savedFileName);
+	     System.out.println("savedFileName= "+savedFileName);
 		//Business Logic
 		productService.updateProduct(product);
 		System.out.println("ProductController.java /updateProduct.do 실행됨");
 		System.out.println("menu "+menu);
-		
+		productService.getProduct(product.getProdNo());   //post으로 맵핑되서 이거 추가하고 get으로 보냄
 //		model.addAttribute("menu", menu);
 		
 //		String sessionId=((Product)session.getAttribute("product")).getProdNo();
@@ -172,6 +196,8 @@ public class ProductController {
 //		}
 //		return "forward:/getProduct.do";
 		return "forward:/product/getProduct.jsp";
+//		return "forward:/product/getProduct2?menu="+menu;
+//		return "forward:/product/getProduct";
 //		return "forward:/getProduct.do?menu="+menu;
 	}
 	

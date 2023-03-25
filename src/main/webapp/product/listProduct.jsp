@@ -40,7 +40,8 @@
 <script type="text/javascript">
 	function fncGetProductList(currentPage, menu){
 		$("#currentPage").val(currentPage);
-		$("#menu").val(menu);
+		var menu = $("#menu").val(menu);
+		alert("list ment="+menu)
 		$("form").attr("method", "POST").attr("action", "/product/listProduct").submit();
 	}	
 	
@@ -59,6 +60,7 @@
 			/* var prodNo = $(this).children('#prodNo').val();
 			alert("prodNo= "+prodNo) */
 			/* alert("prodNo="+$(this).text().trim(); */
+			alert("menu="+menu)
 			
 			  self.location = "/product/getProduct?prodNo="+$(this).children($("#prodNo")).val()+"&menu="+menu;  
 			/* self.location = "/product/getProduct?prodNo="+$("#prodNo").val()+"&menu="+menu; */

@@ -21,29 +21,28 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
+	   
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-		body {
-            padding-top : 50px;
-        }
-    </style>
+	body>div.container {
+		border: 3px solid #D6CDB7;
+		margin-top: 20px;
+	}
+</style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	function fncUpdateProduct() {
+		/* var menu = $("#menu").val(); */
+		var menu = $("input:hidden[name='menu']").val();
+		alert("update menu="+menu)
 		
 		$("form").attr("method" , "POST").attr("action" , "/product/updateProduct").submit();
 		
 	}
 	
 	$(function() {
+		
 		$("#addProductD").on("click", function(){
 			fncUpdateProduct();
 		})
@@ -62,16 +61,20 @@
 
 	<jsp:include page="/layout/toolbar.jsp" />
 	
-	<div class="container">
+	<div class="navbar  navbar-default">
+		<div class="container">
+			<a class="navbar-brand" href="http://192.168.0.159:8080/">Model2
+				MVC Shop</a>
+		</div>
+	</div>
 	
-		<%-- <input type="hidden" name="prodNo" value="${product.prodNo}" /> 
-		<input type="hidden" name="menu" value="${param.menu}" /> --%>
+	<div class="container">
+		
+		
 
-		<div class="page-header text-center">
-	       <h3 class=" text-info">상품수정</h3>
-	    </div>
+		<h1 class="bg-primary text-center">상품수정</h1>
 	    
-	    <form class="form-horizontal" >
+	    <form class="form-horizontal" enctype="multipart/form-data">
 	    
 	    	<div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상 품 명</label>
@@ -81,13 +84,13 @@
 		 	</div>
 		 	
 		 	<div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" value="${product.prodDetail}" >
-		    </div>
+		    	<label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control" id="prodDetail" name="prodDetail" value="${product.prodDetail}" >
+			    </div>
 		 	</div>
 		 	
-		 	<div class="form-group" data-provide="datepicker" data-date-format="yyyy/mm/dd">
+		 	<div class="form-group" > <!-- data-provide="datepicker" data-date-format="yyyy/mm/dd" -->
 		    <label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
 		    <div class="col-sm-4">
 		      <input type="date" class="form-control" id="manuDate" name="manuDate" value="${product.manuDate}" >
@@ -97,27 +100,30 @@
 		 	<div class="form-group">
 		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">가    격</label>
 		    <div class="col-sm-4">
-		      <input type="number" class="form-control" id="price" name="price" value="${product.price}" >
+		      <input type="text" class="form-control" id="price" name="price" value="${product.price}" >
 		    </div>
 		 	</div>
 		 	
-		 	<div class="form-group">
-		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
-		    <div class="col-sm-4">
-		      <input type="file" class="form-control" id="uploadFile" name="file" value="${product.price}" >
-		      <img src="/images/uploadFiles/${product.fileName}" />
-		      <input type="hidden" name="fileName" />
-		    </div>
+		 	 <div class="form-group">
+			    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
+			    <div class="col-sm-4">  
+			      <input type="file" class="form-control" id="uploadFile" name="file" value="${product.fileName}" >
+			      <img src="/images/uploadFiles/${product.fileName}" />
+			      <input type="hidden" name="fileName" />
+			    </div> 
+		    
 		 	</div>
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-right">
 					<button type="button" class="btn btn-primary" id="addProductD">수정</button>
+						<input type="hidden" name="prodNo" value="${product.prodNo}" /> 
+						<input type="hidden" name="menu" value="${param.menu}" /> 
 					<a class="btn btn-primary btn" id="cancel" href="#" role="button">취소</a>
 				</div>
 			</div>
-				
-	</form>
+		</form>		
+		
 	</div>
 
 </body>
